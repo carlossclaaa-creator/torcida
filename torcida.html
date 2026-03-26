@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Maior Torcida do Brasil</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: transparent;
+}
+
+.container {
+    width: 420px;
+    background: rgba(0,0,0,0.8);
+    padding: 15px;
+    border-radius: 15px;
+    color: white;
+}
+
+h1 {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.team {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.corinthians { background: #111; }
+.palmeiras { background: #0b6623; }
+.flamengo { background: #b30000; }
+.saopaulo { background: #8b0000; }
+
+.score {
+    font-size: 18px;
+}
+
+.gift {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.leader {
+    transform: scale(1.08);
+    box-shadow: 0 0 12px gold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🏆 Qual a maior torcida?</h1>
+
+    <div id="corinthians" class="team corinthians">
+        <div>
+            Corinthians  
+            <div class="gift">🌹 Rosinha</div>
+        </div>
+        <span class="score">0</span>
+    </div>
+
+    <div id="palmeiras" class="team palmeiras">
+        <div>
+            Palmeiras  
+            <div class="gift">🌼 Rosa Branca</div>
+        </div>
+        <span class="score">0</span>
+    </div>
+
+    <div id="flamengo" class="team flamengo">
+        <div>
+            Flamengo  
+            <div class="gift">🍦 Sorvete</div>
+        </div>
+        <span class="score">0</span>
+    </div>
+
+    <div id="saopaulo" class="team saopaulo">
+        <div>
+            São Paulo  
+            <div class="gift">🎁 TikTok</div>
+        </div>
+        <span class="score">0</span>
+    </div>
+</div>
+
+<script>
+
+// PONTUAÇÃO
+let scores = {
+    corinthians: 0,
+    palmeiras: 0,
+    flamengo: 0,
+    saopaulo: 0
+};
+
+// ATUALIZA TELA
+function updateUI() {
+    for (let team in scores) {
+        document.querySelector(`#${team} .score`).innerText = scores[team];
+    }
+    updateLeader();
+}
+
+// DESTACA LÍDER
+function updateLeader() {
+    let max = Math.max(...Object.values(scores));
+
+    for (let team in scores) {
+        let el = document.getElementById(team);
+        el.classList.remove("leader");
+
+        if (scores[team] === max && max > 0) {
+            el.classList.add("leader");
+        }
+    }
+}
+
+// ADICIONAR PONTOS
+function addPoints(team, value) {
+    scores[team] += value;
+    updateUI();
+}
+
+// ---------------------------
+// SIMULAÇÃO (REMOVER DEPOIS)
+// ---------------------------
+setInterval(() => {
+    let teams = ["corinthians","palmeiras","flamengo","saopaulo"];
+    let random = teams[Math.floor(Math.random()*teams.length)];
+    addPoints(random, 1);
+}, 2000);
+
+
+// ---------------------------
+// LIGAÇÃO COM PRESENTES (EXEMPLO)
+// ---------------------------
+
+// Você vai substituir isso pelo TikFinity depois
+
+function onGiftReceived(giftName) {
+
+    if (giftName === "Rose") {
+        addPoints("corinthians", 1);
+    }
+
+    if (giftName === "White Rose") {
+        addPoints("palmeiras", 1);
+    }
+
+    if (giftName === "Ice Cream Cone") {
+        addPoints("flamengo", 1);
+    }
+
+    if (giftName === "TikTok") {
+        addPoints("saopaulo", 1);
+    }
+}
+
+</script>
+
+</body>
+</html>
